@@ -30,9 +30,7 @@ def server(log_buffer=sys.stderr):
 
     #sock.bind(address)
     sock.bind(('127.0.0.1', 10000))
-    time.sleep(2)
     sock.listen(1)
-    time.sleep(2)
 
     try:
         # the outer loop controls the creation of new connection sockets. The
@@ -48,7 +46,7 @@ def server(log_buffer=sys.stderr):
             #addr = ('bar', 'baz')
    	    conn, client_address =  sock.accept()
             try:
-                print >>log_buffer, 'connection - {0}:{1}'.format(*addr)
+                print >>log_buffer, 'connection - {0}:{1}'.format(*client_address)
 
                 # the inner loop will receive messages sent by the client in
                 # buffers.  When a complete message has been received, the
@@ -67,7 +65,6 @@ def server(log_buffer=sys.stderr):
                     #       for a new connection from a client
 		    if len(data) > 0:
 		        conn.sendall(data)
-                        time.sleep(3)
 		    else:
 			break
             finally:
@@ -78,7 +75,6 @@ def server(log_buffer=sys.stderr):
                 #       syntax problems
                 #pass
 		conn.close()
-                time.sleep(3)
 
     except KeyboardInterrupt:
         # TODO: Use the python KeyboardIntterupt exception as a signal to
